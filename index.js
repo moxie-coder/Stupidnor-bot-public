@@ -41,9 +41,8 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on("messageCreate", async message => {
-    if (message.guild) return;
-    console.log(`Someone sent DM to me => ${message.content}`);
-    await client.channels.cache.get(CHANNEL_ID).send(messsage.content);
+	console.log(`Someone sent => ${message.content}`);
+	await client.channels.cache.get(CHANNEL_ID).send(messsage.content);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
