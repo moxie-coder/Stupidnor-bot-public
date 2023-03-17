@@ -1,16 +1,17 @@
 // Require the necessary discord.js classes
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Events, GatewayIntentBits, Collection, ActivityType } = require('discord.js');
+const { Client, Events, GatewayIntentBits, Collection, ActivityType, Partials } = require('discord.js');
 const { token } = require('./config.json');
 
 // Create a new client instance
 const client = new Client({ intents: [ 
 	GatewayIntentBits.DirectMessages,
 	GatewayIntentBits.Guilds,
-	GatewayIntentBits.GuildBans,
 	GatewayIntentBits.GuildMessages,
-	GatewayIntentBits.MessageContent,] });
+	GatewayIntentBits.MessageContent],
+	partials: [Partials.Channel] 
+});
 
 // for commands
 client.commands = new Collection();
@@ -41,8 +42,12 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on("messageCreate", async message => {
+	if (message.guild) return;
 	console.log(`Someone sent => ${message.content}`);
-	await client.channels.cache.get(CHANNEL_ID).send(messsage.content);
+
+	if (message.content === "boop"){
+		message.reply('beep uwu');
+	}
 });
 
 client.on(Events.InteractionCreate, async interaction => {
