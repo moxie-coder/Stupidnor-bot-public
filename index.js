@@ -5,7 +5,12 @@ const { Client, Events, GatewayIntentBits, Collection, ActivityType } = require(
 const { token } = require('./config.json');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [ 
+	GatewayIntentBits.DirectMessages,
+	GatewayIntentBits.Guilds,
+	GatewayIntentBits.GuildBans,
+	GatewayIntentBits.GuildMessages,
+	GatewayIntentBits.MessageContent,] });
 
 // for commands
 client.commands = new Collection();
@@ -36,8 +41,9 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on("messageCreate", async message => {
-	console.log(`Someone sent => ${message.content}`);
-	await client.channels.cache.get(CHANNEL_ID).send(messsage.content);
+    if (message.guild) return;
+    console.log(`Someone sent DM to me => ${message.content}`);
+    await client.channels.cache.get(CHANNEL_ID).send(messsage.content);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
