@@ -43,10 +43,30 @@ client.once(Events.ClientReady, c => {
 
 client.on("messageCreate", async message => {
 	if (message.guild) return;
-	console.log(`Someone sent => ${message.content}`);
+	console.log(`Someone sent DM to me => ${message.content}`);
 
 	if (message.content === "boop"){
 		message.reply('beep uwu');
+	}
+
+	// does stupidnor hate that?
+	// I should ask myfnf
+	if (message.content === "vore"){
+		let e = ["No, just no", "Please stop", "Nope", "Ew wtf", "Wtf man", "Wtf did you just say?"];
+		let random = e[Math.floor(Math.random() * e.length)];
+		message.author.send(`${random}`);
+	}
+
+	if (message.content === "hi" || message.content === "hello" || message.content === "howdy" || message.content === "hey"){
+		message.reply('hi');
+	}
+
+	if (message.content === "please eat me"){
+		message.author.send('No');
+	}
+
+	if (message.content === "who made you?"){
+		message.reply('myFnF made me');
 	}
 });
 
