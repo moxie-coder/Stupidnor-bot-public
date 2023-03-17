@@ -10,7 +10,7 @@ const client = new Client({ intents: [
 	GatewayIntentBits.Guilds,
 	GatewayIntentBits.GuildMessages,
 	GatewayIntentBits.MessageContent],
-	partials: [Partials.Channel] 
+	partials: [Partials.Channel, Partials.GuildMember] 
 });
 
 // for commands
@@ -42,7 +42,7 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on("messageCreate", async message => {
-	if (message.guild) return;
+	if (message.guild || message.author.bot) return;
 	console.log(`Someone sent DM to me => ${message.content}`);
 
 	if (message.content === "boop"){
@@ -65,9 +65,18 @@ client.on("messageCreate", async message => {
 		message.author.send('No');
 	}
 
-	if (message.content === "who made you?"){
+	if (message.content === "who made you?" || message.content === "who is your creator?" || message.content === "who's your creator?"){
 		message.reply('myFnF made me');
 	}
+});
+
+client.on("guildMemberAdd", (member) => {
+	console.log(`New User "${member.user.username}" has joined "${member.guild.name}"` );
+	member.guild.channels.cache.find(c => c.name === "welcome").send(`"${member.user.username}" has joined this server`);
+});
+
+client.on('guildMemberRemove', (member) => {
+	member.guild.channels.cache.find(e => e.name === "goodbye").send(`"${member.user.username}" has left this server`);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
