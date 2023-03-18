@@ -68,6 +68,19 @@ client.on("messageCreate", async message => {
 	if (message.content === "who made you?" || message.content === "who is your creator?" || message.content === "who's your creator?"){
 		message.reply('myFnF made me');
 	}
+
+	if (message.content === "your gay" || message.content === "you're gay"){
+		message.reply('im homo, sorry no :P');
+	}
+
+	// I wasn't sure
+	if (message.content === "i wanna fuck you" || message.content === "I wanna fuck you"){
+		message.reply("okay :heart:");
+	}
+
+	if (message.content === "i love you so much" || message.content === "I love you so much"){
+		message.reply("I love you too :heart:");
+	}
 });
 
 client.on("guildMemberAdd", (member) => {
